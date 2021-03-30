@@ -1,8 +1,8 @@
 package com.company;
 
 public class City {
-    String nume;
-    String judet;
+    private String nume;
+    private String judet;
 
     public City(String nume, String judet) {
         this.nume = nume;

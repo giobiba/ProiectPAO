@@ -3,7 +3,7 @@
 ## Lista Interogari:
 * Localuri deschise din orasul utilizatorului
 * Meniul unui Anumit local
-* 
+* Ofertele unui anumit local
 * Comenzi in procesare
 * Userii care au comenzi active
 * Soferii care sunt liberi

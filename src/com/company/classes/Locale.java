@@ -1,5 +1,6 @@
 package com.company.classes;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -18,6 +19,10 @@ public class Locale {
         this.menu = menu;
         this.openhour = openhour;
         this.closehour = closehour;
+    }
+
+    public UUID getLocaleId() {
+        return localeId;
     }
 
     public String getName() {
@@ -63,5 +68,22 @@ public class Locale {
     @Override
     public int hashCode() {
         return Objects.hash(name, location);
+    }
+
+    public void modifyMenu(String item) {
+        int N = this.menu.length;
+        this.menu = Arrays.copyOf(this.menu, N + 1);
+        this.menu[N] = item;
+    }
+
+    @Override
+    public String toString() {
+        return "Locale{" +
+                "name='" + name + '\'' +
+                ", location=" + location +
+                ", menu=" + Arrays.toString(menu) +
+                ", openhour=" + openhour +
+                ", closehour=" + closehour +
+                '}';
     }
 }

@@ -32,4 +32,12 @@ public class City {
     public void setCounty(String county) {
         this.county = county;
     }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "name='" + name + '\'' +
+                ", county='" + county + '\'' +
+                '}';
+    }
 }

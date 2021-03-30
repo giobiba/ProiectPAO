@@ -3,14 +3,20 @@ package com.company.classes;
 import java.util.UUID;
 
 public class Delivery {
+
+    public enum Vehicle {
+        Bike,
+        Car,
+        ByFoot
+    }
+
     private UUID deliveryId = UUID.randomUUID();
     private String name;
     private String surname;
     private String phone;
     private Vehicle vehicle;
 
-    public Delivery(UUID deliveryId, String name, String surname, String phone, Vehicle vehicle) {
-        this.deliveryId = deliveryId;
+    public Delivery(String name, String surname, String phone, Vehicle vehicle) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
@@ -56,10 +62,14 @@ public class Delivery {
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
-}
 
-enum Vehicle {
-    Bike,
-    Car,
-    ByFoot
+    @Override
+    public String toString() {
+        return "Delivery{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", phone='" + phone + '\'' +
+                ", vehicle=" + vehicle +
+                '}';
+    }
 }

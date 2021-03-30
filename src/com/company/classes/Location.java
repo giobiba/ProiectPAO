@@ -41,4 +41,13 @@ public class Location {
     public void setCity(City city) {
         this.city = city;
     }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "street='" + street + '\'' +
+                ", number=" + number +
+                ", city=" + city +
+                '}';
+    }
 }

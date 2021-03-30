@@ -6,8 +6,8 @@ public class OrdersPayedOnline extends Order{
     private String cardNumber;
     private String cardHolder;
 
-    public OrdersPayedOnline(Date date, Locale locale, User client, Delivery delivery, float price, String[] order, String cardNumber, boolean completed, String cardHolder) {
-        super(date, locale, client, delivery, price, order, completed);
+    public OrdersPayedOnline(Locale locale, User client, Delivery delivery, float price, String[] order, String cardNumber, boolean completed, String cardHolder) {
+        super(locale, client, delivery, price, order, completed);
         this.cardNumber = cardNumber;
         this.cardHolder = cardHolder;
     }

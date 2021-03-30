@@ -1,5 +1,6 @@
 package com.company.classes;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
 
@@ -13,8 +14,8 @@ public abstract class Order {
     private String[] order;
     private boolean completed;
 
-    public Order(Date date, Locale locale, User client, Delivery delivery, float price, String[] order, boolean completed) {
-        this.date = date;
+    public Order(Locale locale, User client, Delivery delivery, float price, String[] order, boolean completed) {
+        this.date = new Date(System.currentTimeMillis());
         this.locale = locale;
         this.client = client;
         this.delivery = delivery;
@@ -81,5 +82,18 @@ public abstract class Order {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "date=" + date +
+                ", locale=" + locale +
+                ", client=" + client +
+                ", delivery=" + delivery +
+                ", price=" + price +
+                ", order=" + Arrays.toString(order) +
+                ", completed=" + completed +
+                '}';
     }
 }

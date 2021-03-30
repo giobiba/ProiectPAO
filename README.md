@@ -1,16 +1,17 @@
 # ProiectPAO
 
 ## Lista Interogari:
-* Localuri deschise din orasul utilizatorului
-* Meniul unui Anumit local
-* Ofertele unui anumit local
-* Comenzi in procesare
-* Userii care au comenzi active
-* Soferii care sunt liberi
-* Comenzile unui anumit local
-* Userii dintr-un anumit oras
-* Comenzile de platit la ramburs ale unui anumit sofer
-* Localurile la care a mai comandat un user
+* Available locales for a given user
+* Menu of a locale
+* Add a new order
+* Cancel an order
+* Add a new user
+* Make a order complete
+* Add a product to the locale's menu
+* Show deliveries that are available
+* Change an order's delivery guy
+
+
 
 ## Lista Obiecte:
-Locatii, Orase, Localuri, Comenzi, ComenziPlataOnline, ComernziPlataRamburs, Soferi, Useri, 
+Locations, Cities, Locales, Orders, OrdersPayedOnline, OrderesPayedOnDelivery, Drivers, Users

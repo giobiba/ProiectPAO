@@ -1,4 +1,6 @@
-package com.company;
+package com.company.services;
+
+import com.company.classes.User;
 
 import java.util.ArrayList;
 

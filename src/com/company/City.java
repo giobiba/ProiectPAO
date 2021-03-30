@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Objects;
+
 public class City {
     private String nume;
     private String judet;
@@ -23,5 +25,10 @@ public class City {
 
     public void setJudet(String judet) {
         this.judet = judet;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nume, judet);
     }
 }

@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Objects;
+
 public class Location {
     private String strada;
     private int numar;
@@ -33,5 +35,10 @@ public class Location {
 
     public void setOras(City oras) {
         this.oras = oras;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numar,strada,oras);
     }
 }

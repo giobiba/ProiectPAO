@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class User {
     private String nume;
@@ -67,5 +68,24 @@ public class User {
 
     public void setData_nasterii(Date data_nasterii) {
         this.data_nasterii = data_nasterii;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nume, prenume, telefon, mail);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        final User other = (User) obj;
+
+        return Objects.equals(this.nume, other.nume) && Objects.equals(this.prenume, other.prenume) && Objects.equals(this.telefon, other.telefon) && Objects.equals(this.mail, other.mail);
     }
 }

@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Objects;
+
 public class Delivery {
     String nume;
     String prenume;
@@ -33,5 +35,10 @@ public class Delivery {
 
     public void setTelefon(String telefon) {
         this.telefon = telefon;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nume, prenume, telefon);
     }
 }

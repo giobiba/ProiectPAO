@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.Date;
+import java.util.Objects;
 
 public abstract class Order {
     private Date data;
@@ -65,5 +66,10 @@ public abstract class Order {
 
     public void setComanda(String[] comanda) {
         this.comanda = comanda;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(curier, client, data, local, comanda, pret);
     }
 }

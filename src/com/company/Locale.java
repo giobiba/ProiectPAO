@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Objects;
+
 public class Locale {
     String nume;
     Location locatie;
@@ -64,5 +66,10 @@ public class Locale {
 
     public void setOraInchidere(int oraInchidere) {
         this.oraInchidere = oraInchidere;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nume, locatie);
     }
 }

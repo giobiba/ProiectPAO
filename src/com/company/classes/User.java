@@ -19,7 +19,7 @@ public class User {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
-        this.address = address;
+        this.address = new Location(address);
         this.email = email;
         this.birthday = birthday;
     }
@@ -36,9 +36,9 @@ public class User {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+        public void setName(String name) {
+            this.name = name;
+        }
 
     public String getSurname() {
         return surname;

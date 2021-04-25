@@ -14,6 +14,12 @@ public class Location {
         this.city = city;
     }
 
+    public Location(Location address) {
+        this.street = address.getStreet();
+        this.number = address.getNumber();
+        this.city = new City(address.city);
+    }
+
     public UUID getLocationId() {
         return locationId;
     }

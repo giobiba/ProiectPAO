@@ -38,7 +38,9 @@ public class DeliveryService {
 
     public void readFromFile(String path) {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(path));
+            BufferedReader reader = new BufferedReader(new InputStreamReader((
+                    this.getClass().getResourceAsStream("/" + path)
+            )));
 
             String line = reader.readLine();
 

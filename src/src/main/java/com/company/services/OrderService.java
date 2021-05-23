@@ -23,7 +23,7 @@ public class OrderService {
             this.logger = new FileWriter(file, true);
         }
         catch(IOException e) {
-
+            System.out.println(e);
         }
     }
     public void completeOrder(UUID idOrder) {
@@ -122,7 +122,9 @@ public class OrderService {
 
     public void readFromFile(String path, UserService us, LocaleService ls, DeliveryService ds) {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(path));
+            BufferedReader reader = new BufferedReader(new InputStreamReader((
+                    this.getClass().getResourceAsStream("/" + path)
+            )));
 
             String line = reader.readLine();
 

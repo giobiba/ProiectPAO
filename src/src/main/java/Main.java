@@ -20,7 +20,6 @@ public class Main {
 
         try {
             db = new DatabaseManager(url);
-
             db.initializeDatabase();
         }catch(SQLException e) {
             e.printStackTrace();
@@ -29,7 +28,7 @@ public class Main {
 
         LocaleService ls = new LocaleService();
         DeliveryService ds = new DeliveryService();
-        //OrderService os = new OrderService("log-orders.csv");
+        OrderService os = new OrderService("log-orders.csv");
         UserService us = new UserService();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -38,14 +37,9 @@ public class Main {
         ds.readFromFile("deliveries.csv", db);
         ls.readFromFile("locales.csv", db);
 
-        try {
-            ls.availableLocales(0, db);
-        }catch(SQLException e) {
-            e.printStackTrace();
-        }
 
-        //ls.sortLocales();
-        //os.readFromFile("orders.csv", us, ls, ds);
+        ls.sortLocales();
+        os.readFromFile("orders.csv", us, ls, ds);
 
         //ls.writeToFile("locales.csv", ls.getLocales().get(0));
 

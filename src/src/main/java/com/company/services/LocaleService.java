@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 public class LocaleService {
-    ArrayList<Locale> locales;
+    ArrayList<Locale> locales = new ArrayList<Locale>();
 
     public ArrayList<Locale> availableLocales(User u) throws SQLException{
         if(u == null)
@@ -95,7 +95,7 @@ public class LocaleService {
                 String locale_name = locale_info[1];
 
                 Integer location_id =  Integer.parseInt(locale_info[2]);
-                Location address = null;
+                Location address = new Location(100, "dfsa", 13, new City(100, "dsadq", "100"));
 
                 String[] menu = locale_info[3].substring(1, locale_info[3].length() - 1).split("[\\s]*;[\\s]*");
 
@@ -132,7 +132,8 @@ public class LocaleService {
 
                 pstmt.executeUpdate();
 
-                locales.add(new Locale(locale_id, locale_name, address, menu, open_hour, close_hour));
+                Locale locale = new Locale(locale_id, locale_name, address, menu, open_hour, close_hour);
+                locales.add(locale);
 
                 line = reader.readLine();
             }

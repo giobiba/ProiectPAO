@@ -120,73 +120,73 @@ public class OrderService {
         return orders;
     }
 
-    public void readFromFile(String path, UserService us, LocaleService ls, DeliveryService ds) {
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader((
-                    this.getClass().getResourceAsStream("/" + path)
-            )));
-
-            String line = reader.readLine();
-
-            while(line != null) {
-                if (line.equals("")) {
-                    line = reader.readLine();
-                    continue;
-                }
-
-                String[] order_info = line.split("[\\s]*,[\\s]*");
-
-                Locale locale = ls.getLocaleByName(order_info[0]);
-                User user = us.findByMail(order_info[1]);
-                Delivery delivery = ds.getDeliveryGuy(order_info[2]);
-                Float price = Float.valueOf(order_info[3]);
-                String[] order = order_info[4].substring(1, order_info[4].length() - 1).split("[\\s]*;[\\s]*");
-
-                Boolean completed;
-                switch (order_info[5]) {
-                    case "true":
-                        completed = true;
-                        break;
-                    default:
-                        completed = false;
-                        break;
-                }
-
-                // cazul orderPayedOnDelivery
-                if (order_info.length == 7) {
-                    Boolean hasChange;
-                    switch (order_info[6]) {
-                        case "true":
-                            hasChange = true;
-                            break;
-                        default:
-                            hasChange = false;
-                            break;
-                    }
-                    this.addOrder(new OrdersPayedOnDelivery(locale, user, delivery, price, order, completed,
-                            hasChange));
-                }
-                // cazul orderPayedOnline
-                else {
-                    String card = order_info[6];
-                    String card_holder = order_info[7];
-
-                    this.addOrder(new OrdersPayedOnline(locale, user, delivery, price, order, completed, card,
-                            card_holder));
-                }
-
-                line = reader.readLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public void readFromFile(String path, UserService us, LocaleService ls, DeliveryService ds) {
+//        try {
+//            BufferedReader reader = new BufferedReader(new InputStreamReader((
+//                    this.getClass().getResourceAsStream("/" + path)
+//            )));
+//
+//            String line = reader.readLine();
+//
+//            while(line != null) {
+//                if (line.equals("")) {
+//                    line = reader.readLine();
+//                    continue;
+//                }
+//
+//                String[] order_info = line.split("[\\s]*,[\\s]*");
+//
+//                Locale locale = ls.getLocaleByName(order_info[0]);
+//                User user = us.findByMail(order_info[1]);
+//                Delivery delivery = ds.getDeliveryGuy(order_info[2]);
+//                Float price = Float.valueOf(order_info[3]);
+//                String[] order = order_info[4].substring(1, order_info[4].length() - 1).split("[\\s]*;[\\s]*");
+//
+//                Boolean completed;
+//                switch (order_info[5]) {
+//                    case "true":
+//                        completed = true;
+//                        break;
+//                    default:
+//                        completed = false;
+//                        break;
+//                }
+//
+//                // cazul orderPayedOnDelivery
+//                if (order_info.length == 7) {
+//                    Boolean hasChange;
+//                    switch (order_info[6]) {
+//                        case "true":
+//                            hasChange = true;
+//                            break;
+//                        default:
+//                            hasChange = false;
+//                            break;
+//                    }
+//                    this.addOrder(new OrdersPayedOnDelivery(locale, user, delivery, price, order, completed,
+//                            hasChange));
+//                }
+//                // cazul orderPayedOnline
+//                else {
+//                    String card = order_info[6];
+//                    String card_holder = order_info[7];
+//
+//                    this.addOrder(new OrdersPayedOnline(locale, user, delivery, price, order, completed, card,
+//                            card_holder));
+//                }
+//
+//                line = reader.readLine();
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        catch (IndexOutOfBoundsException e) {
+//            e.printStackTrace();
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public void writeToFile(String path, Order order) {
         File file = new File(path);

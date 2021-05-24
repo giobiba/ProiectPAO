@@ -1,10 +1,14 @@
 package com.company.services;
 
+import com.company.DatabaseManager;
 import com.company.classes.City;
 import com.company.classes.Location;
 import com.company.classes.User;
 
 import java.io.*;
+import java.sql.Blob;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,7 +33,7 @@ public class UserService {
         users.add(u);
     }
 
-    public void readFromFile(String path) {
+    public void readFromFile(String path, DatabaseManager db) {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader((
                     this.getClass().getResourceAsStream("/" + path)
@@ -43,28 +47,27 @@ public class UserService {
                     continue;
                 }
                 String[] user_info = line.split("[\\s]*,[\\s]*");
-                String name = user_info[0];
-                String surname = user_info[1];
-                String phone = user_info[2];
+                Integer user_id = Integer.parseInt(user_info[0]);
+                String name = user_info[1];
+                String surname = user_info[2];
+                String phone = user_info[3];
                 
-                String street_name =  user_info[3];
-                Integer street_number = Integer.valueOf(user_info[4]);
+                Integer location_id = Integer.parseInt(user_info[4]);
+                Location address = null;
+                String email = user_info[5];
 
-                String city_name = user_info[5];
-                String county_name = user_info[6];
+                String date = user_info[6];
 
-                City city = new City(city_name, county_name);
+                String sql = "INSERT INTO USERS(user_id, name, surname, phone, location_id, birthday) VALUES(?,?,?,?,?,?)";
+                PreparedStatement pstmt = db.conn.prepareStatement(sql);
+                pstmt.setInt(1, user_id);
+                pstmt.setString(2, name);
+                pstmt.setString(3, surname);
+                pstmt.setString(4, phone);
+                pstmt.setInt(5, location_id);
+                pstmt.setString(6, date);
 
-                Location address = new Location(street_name, street_number, city);
-
-                String email = user_info[7];
-
-                DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-                Date date = format.parse(user_info[8]);
-
-                User user = new User(name, surname, phone, address, email, date);
-
-                users.add(user);
+                pstmt.executeUpdate();
 
                 line = reader.readLine();
             }

@@ -1,11 +1,14 @@
 package com.company.services;
 
+import com.company.DatabaseManager;
 import com.company.classes.City;
 import com.company.classes.Delivery;
 import com.company.classes.Location;
 import com.company.classes.User;
 
+import javax.xml.crypto.Data;
 import java.io.*;
+import java.sql.PreparedStatement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,7 +39,7 @@ public class DeliveryService {
         return deliveryGuys;
     }
 
-    public void readFromFile(String path) {
+    public void readFromFile(String path, DatabaseManager db) {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader((
                     this.getClass().getResourceAsStream("/" + path)
@@ -50,12 +53,14 @@ public class DeliveryService {
                     continue;
                 }
                 String[] delivery_info = line.split("[\\s]*,[\\s]*");
-                String name = delivery_info[0];
-                String surname = delivery_info[1];
-                String phone_number = delivery_info[2];
+                Integer delivery_id = Integer.parseInt(delivery_info[0]);
+                String name = delivery_info[1];
+                String surname = delivery_info[2];
+                String phone_number = delivery_info[3];
+                String vehicle_name = delivery_info[4];
                 Delivery.Vehicle vehicle;
 
-                switch (delivery_info[3]) {
+                switch (vehicle_name) {
                     case "Bike":
                         vehicle = Delivery.Vehicle.Bike;
                         break;
@@ -69,7 +74,16 @@ public class DeliveryService {
                         vehicle = Delivery.Vehicle.Car;
                         break;
                 }
-                Delivery delivery_guy = new Delivery(name, surname, phone_number, vehicle);
+                Delivery delivery_guy = new Delivery(delivery_id, name, surname, phone_number, vehicle);
+
+                String sql = "INSERT INTO DELIVERIES(delivery_id, name, surname, vehicle) VALUES(?,?,?,?)";
+                PreparedStatement pstmt = db.conn.prepareStatement(sql);
+                pstmt.setInt(1, delivery_id);
+                pstmt.setString(2, name);
+                pstmt.setString(3, surname);
+                pstmt.setString(4, vehicle_name);
+
+                pstmt.executeUpdate();
 
                 this.addDelivery(delivery_guy);
 

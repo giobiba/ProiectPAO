@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class User {
-    private UUID userId = UUID.randomUUID();
+    private Integer user_id;
     private String name;
     private String surname;
 
@@ -15,7 +15,8 @@ public class User {
 
     private Date birthday;
 
-    public User(String name, String surname, String phone, Location address, String email, Date birthday) {
+    public User(Integer user_id, String name, String surname, String phone, Location address, String email, Date birthday) {
+        this.user_id = user_id;
         this.name = name;
         this.surname = surname;
         this.phone = phone;
@@ -24,12 +25,9 @@ public class User {
         this.birthday = birthday;
     }
 
-    public UUID getUserId() {
-        return userId;
-    }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
+    public Integer getUserId() {
+        return user_id;
     }
 
     public String getName() {
@@ -85,12 +83,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId.equals(user.userId);
+        return this.user_id == user.user_id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId);
+        return Objects.hash(user_id);
     }
 
     @Override

@@ -1,21 +1,20 @@
 package com.company.services;
 
-import com.company.classes.*;
+import com.company.DatabaseManager;
+import com.company.classes.City;
 import com.company.classes.Locale;
+import com.company.classes.Location;
+import com.company.classes.User;
 
 import java.io.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.sql.*;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class LocaleService {
     ArrayList<Locale> locales;
 
-    public LocaleService() {
-        this.locales = new ArrayList<Locale>();
-    }
-
-    public ArrayList<Locale> availableLocales(User u) {
+    public ArrayList<Locale> availableLocales(User u) throws SQLException{
         if(u == null)
             return null;
 
@@ -31,13 +30,15 @@ public class LocaleService {
         return av;
     }
 
-    public String[] getMenu(UUID localeId) {
-        for(Locale l : locales) {
-            if(l.getLocaleId() == localeId) {
-                return l.getMenu();
-            }
+    public String[] getMenu(Integer locale_id, DatabaseManager db) throws SQLException {
+        Statement stmt = db.conn.createStatement();
+        ResultSet res = stmt.executeQuery("SELECT NAME FROM MENU WHERE LOCALE_ID == " + locale_id);
+        ArrayList<String> menu = new ArrayList<>();
+        while(res.next()) {
+            String item = res.getString("name");
+            menu.add(item);
         }
-        return null;
+        return menu.toArray(new String[0]);
     }
 
     public Locale getLocaleByName(String name) {
@@ -49,9 +50,9 @@ public class LocaleService {
         return null;
     }
 
-    public void addToMenu(String item, UUID localeId) {
+    public void addToMenu(String item, Integer locale_id) {
         for(Locale l : locales) {
-            if(l.getLocaleId() == localeId) {
+            if(l.getLocaleId().equals(locale_id)) {
                 l.modifyMenu(item);
                 return;
             }
@@ -74,12 +75,14 @@ public class LocaleService {
         locales.add(l);
     }
 
-    public void readFromFile(String path) {
+    public void readFromFile(String path, DatabaseManager db) {
+
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader((
-                    this.getClass().getResourceAsStream("/" + path)
+                    Objects.requireNonNull(this.getClass().getResourceAsStream("/" + path))
             )));
 
+            Statement stmt = db.conn.createStatement();
             String line = reader.readLine();
 
             while(line != null) {
@@ -88,30 +91,52 @@ public class LocaleService {
                     continue;
                 }
                 String[] locale_info = line.split("[\\s]*,[\\s]*");
-                String locale_name = locale_info[0];
+                Integer locale_id = Integer.parseInt(locale_info[0]);
+                String locale_name = locale_info[1];
 
-                String street_name =  locale_info[1];
-                int street_number = Integer.parseInt(locale_info[2]);
+                Integer location_id =  Integer.parseInt(locale_info[2]);
+                Location address = null;
 
-                String city_name = locale_info[3];
-                String county_name = locale_info[4];
+                String[] menu = locale_info[3].substring(1, locale_info[3].length() - 1).split("[\\s]*;[\\s]*");
 
-                City city = new City(city_name, county_name);
+                Stream.of(menu).forEach(item -> {
+                    try {
+                        String sql = "INSERT INTO MENU(name, price, locale_id) VALUES(?,?,?)";
+                        PreparedStatement pstmt = db.conn.prepareStatement(sql);
 
-                Location address = new Location(street_name, street_number, city);
+                        pstmt.setString(1, item);
+                        pstmt.setInt(2, 1);
+                        pstmt.setInt(3, locale_id);
+                        pstmt.executeUpdate();
 
-                String[] menu = locale_info[5].substring(1, locale_info[5].length() - 1).split("[\\s]*;[\\s]*");
 
-                int open_hour = Integer.parseInt(locale_info[6]);
-                int close_hour = Integer.parseInt(locale_info[7]);
+                        pstmt.execute();
 
-                Locale l = new Locale(locale_name, address, menu, open_hour, close_hour);
+                    }
+                    catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                });
 
-                this.addLocale(l);
+                int open_hour = Integer.parseInt(locale_info[4]);
+                int close_hour = Integer.parseInt(locale_info[5]);
+
+                String sql = "INSERT INTO LOCALES(locale_id, name, location_id, open_hour, close_hour) VALUES(?,?,?,?,?)";
+
+                PreparedStatement pstmt = db.conn.prepareStatement(sql);
+                pstmt.setInt(1,locale_id);
+                pstmt.setString(2,locale_name);
+                pstmt.setInt(3, location_id);
+                pstmt.setInt(4, open_hour);
+                pstmt.setInt(5, close_hour);
+
+                pstmt.executeUpdate();
+
+                locales.add(new Locale(locale_id, locale_name, address, menu, open_hour, close_hour));
 
                 line = reader.readLine();
             }
-        } catch (IOException e) {
+        }catch (IOException | SQLException e) {
             e.printStackTrace();
         }
     }

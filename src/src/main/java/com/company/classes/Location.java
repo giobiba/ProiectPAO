@@ -3,12 +3,13 @@ package com.company.classes;
 import java.util.UUID;
 
 public class Location {
-    private final UUID locationId = UUID.randomUUID();
+    private Integer location_id;
     private String street;
     private int number;
     private City city;
 
-    public Location(String street, int number, City city) {
+    public Location(Integer location_id, String street, int number, City city) {
+        this.location_id = location_id;
         this.street = street;
         this.number = number;
         this.city = city;
@@ -20,8 +21,8 @@ public class Location {
         this.city = new City(address.city);
     }
 
-    public UUID getLocationId() {
-        return locationId;
+    public Integer getLocationId() {
+        return location_id;
     }
 
     public String getStreet() {

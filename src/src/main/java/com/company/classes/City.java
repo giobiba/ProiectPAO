@@ -4,11 +4,12 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class City implements Comparable<City>{
-    private final UUID cityId = UUID.randomUUID();
+    private Integer city_id;
     private String name;
     private String county;
 
-    public City(String name, String county) {
+    public City(Integer city_id, String name, String county) {
+        this.city_id = city_id;
         this.name = name;
         this.county = county;
     }
@@ -18,8 +19,8 @@ public class City implements Comparable<City>{
         this.county = city.county;
     }
 
-    public UUID getCityId() {
-        return cityId;
+    public Integer getCityId() {
+        return city_id;
     }
 
     public String getName() {

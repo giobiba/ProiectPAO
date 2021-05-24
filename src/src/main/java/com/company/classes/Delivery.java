@@ -10,7 +10,7 @@ public class Delivery {
         ByFoot
     }
 
-    private UUID deliveryId = UUID.randomUUID();
+    private Integer deliveryId;
     private String name;
     private String surname;
     private String phone;
@@ -23,11 +23,19 @@ public class Delivery {
         this.vehicle = vehicle;
     }
 
-    public UUID getDeliveryId() {
+    public Delivery(Integer deliveryId, String name, String surname, String phone, Vehicle vehicle) {
+        this.deliveryId = deliveryId;
+        this.name = name;
+        this.surname = surname;
+        this.phone = phone;
+        this.vehicle = vehicle;
+    }
+
+    public Integer getDeliveryId() {
         return deliveryId;
     }
 
-    public void setDeliveryId(UUID deliveryId) {
+    public void setDeliveryId(Integer deliveryId) {
         this.deliveryId = deliveryId;
     }
 

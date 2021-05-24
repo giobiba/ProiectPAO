@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Locale {
-    private UUID localeId = UUID.randomUUID();
+    private Integer locale_id;
     private String name;
     private Location location;
     private String[] menu;
@@ -13,7 +13,8 @@ public class Locale {
     private int openhour;
     private int closehour;
 
-    public Locale(String name, Location location, String[] menu, int openhour, int closehour) {
+    public Locale(Integer locale_id, String name, Location location, String[] menu, int openhour, int closehour) {
+        this.locale_id = locale_id;
         this.name = name;
         this.location = location;
         this.menu = menu;
@@ -21,8 +22,8 @@ public class Locale {
         this.closehour = closehour;
     }
 
-    public UUID getLocaleId() {
-        return localeId;
+    public Integer getLocaleId() {
+        return locale_id;
     }
 
     public String getName() {

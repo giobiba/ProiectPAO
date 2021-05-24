@@ -56,7 +56,10 @@ public class UserService {
                 Location address = null;
                 String email = user_info[5];
 
-                String date = user_info[6];
+
+                DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+                Date date = format.parse(user_info[8]);
+                String birthday = user_info[6];
 
                 String sql = "INSERT INTO USERS(user_id, name, surname, phone, location_id, birthday) VALUES(?,?,?,?,?,?)";
                 PreparedStatement pstmt = db.conn.prepareStatement(sql);
@@ -65,9 +68,10 @@ public class UserService {
                 pstmt.setString(3, surname);
                 pstmt.setString(4, phone);
                 pstmt.setInt(5, location_id);
-                pstmt.setString(6, date);
+                pstmt.setString(6, birthday);
 
                 pstmt.executeUpdate();
+                users.add(new User(user_id, name, surname, phone, address, email, date));
 
                 line = reader.readLine();
             }

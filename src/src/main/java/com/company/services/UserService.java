@@ -53,12 +53,12 @@ public class UserService {
                 String phone = user_info[3];
                 
                 Integer location_id = Integer.parseInt(user_info[4]);
-                Location address = null;
+                Location address = new Location(100, "dfsa", 13, new City(100, "dsadq", "100"));
                 String email = user_info[5];
 
 
                 DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-                Date date = format.parse(user_info[8]);
+                Date date = format.parse(user_info[6]);
                 String birthday = user_info[6];
 
                 String sql = "INSERT INTO USERS(user_id, name, surname, phone, location_id, birthday) VALUES(?,?,?,?,?,?)";

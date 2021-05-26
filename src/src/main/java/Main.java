@@ -41,7 +41,7 @@ public class Main {
         ls.sortLocales();
         os.readFromFile("orders.csv", us, ls, ds);
 
-        //ls.writeToFile("locales.csv", ls.getLocales().get(0));
+        ls.writeToFile("locales.csv", ls.getLocales().get(0));
 
     }
 }
